@@ -42,14 +42,16 @@ class GameService:
 
 
     async def workCall(self, team_id: int):
-        admin_id = await self.pairingSystem.add_call(team_id)
-        if admin_id != -1:
-            await self.call(admin_id, team_id)
+        async with self.lock:
+            admin_id = await self.pairingSystem.add_call(team_id)
+            if admin_id != -1:
+                await self.call(admin_id, team_id)
 
     async def workOperator(self, admin_id: int):
-        team_id = await self.pairingSystem.add_operator(admin_id)
-        if team_id != -1:
-            await self.call(admin_id, team_id)
+        async with self.lock:
+            team_id = await self.pairingSystem.add_operator(admin_id)
+            if team_id != -1:
+                await self.call(admin_id, team_id)
 
     async def call(self, admin_id: int, team_id: int):
         if not self.game_status:
