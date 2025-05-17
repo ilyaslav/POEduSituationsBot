@@ -10,7 +10,7 @@ class GameService:
     def __init__(self):
         self.game_status = False
         self.pairingSystem = PairingSystem(Repository.check_call)
-        self.lock - Lock()
+        self.lock = Lock()
         self.notifications = {
             1: SingleTimer(lambda: self.sendNotification(1), 300),
             2: SingleTimer(lambda: self.sendNotification(2), 300),
