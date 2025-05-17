@@ -200,7 +200,7 @@ class Repository:
                 select(UserBase.admin_id)
                 .filter(UserBase.role_admin == True)
                 .filter(UserBase.in_progress == False)
-                .filter(UserBase.admin_id != None)
+                .filter(UserBase.user_id != None)
             )
             return [admin_id for (admin_id,) in res.all()]
 
@@ -211,7 +211,7 @@ class Repository:
                 update(UserBase)
                 .values(feedback_id=admin_id)
                 .filter(UserBase.team_id == team_id)
-                .filter(UserBase.role_admin == True)
+                .filter(UserBase.user_id == True)
             )
             await sf.execute(
                 update(UserBase)
