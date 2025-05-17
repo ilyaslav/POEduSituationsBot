@@ -211,13 +211,13 @@ class Repository:
                 update(UserBase)
                 .values(feedback_id=admin_id)
                 .filter(UserBase.team_id == team_id)
-                .filter(UserBase.user_id == True)
+                .filter(UserBase.role_admin == False)
             )
             await sf.execute(
                 update(UserBase)
                 .values(feedback_id=team_id)
                 .filter(UserBase.admin_id == admin_id)
-                .filter(UserBase.role_admin == False)
+                .filter(UserBase.role_admin == True)
             )
             await sf.commit()
 
