@@ -37,8 +37,7 @@ class GameService:
         # teams = [1]
         await self.pairingSystem.fill_operators(admins)
         for team_id in teams:
-            async with self.lock:
-                await self.workCall(team_id)
+            await self.workCall(team_id)
 
 
     async def workCall(self, team_id: int):
