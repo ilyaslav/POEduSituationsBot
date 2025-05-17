@@ -4,14 +4,15 @@ from src.service.singleTimer import SingleTimer
 from src.database.repository import Repository
 from src.service.pairingSystem import PairingSystem
 from src.texts import time_message, calls, press_start
-
+from asyncio import Lock
 
 class GameService:
     def __init__(self):
         self.game_status = False
         self.pairingSystem = PairingSystem(Repository.check_call)
+        self.lock - Lock()
         self.notifications = {
-            1: SingleTimer(lambda: self.sendNotification(1), 15),
+            1: SingleTimer(lambda: self.sendNotification(1), 300),
             2: SingleTimer(lambda: self.sendNotification(2), 300),
             3: SingleTimer(lambda: self.sendNotification(3), 300),
             4: SingleTimer(lambda: self.sendNotification(4), 300),
@@ -36,7 +37,8 @@ class GameService:
         # teams = [1]
         await self.pairingSystem.fill_operators(admins)
         for team_id in teams:
-            await self.workCall(team_id)
+            async with self.lock:
+                await self.workCall(team_id)
 
 
     async def workCall(self, team_id: int):
