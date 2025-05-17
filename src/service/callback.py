@@ -67,6 +67,9 @@ async def callback_button(callback_query):
 
 @config.dp.callback_query(F.data.contains("team"))
 async def callback_button(callback_query):
+    if gameService.game_status:
+        await callback_query.message.delete()
+        return
     team_id = int(callback_query.data[5:])
     text = teams[team_id]
     await Repository.set_team(str(callback_query.from_user.id), team_id)

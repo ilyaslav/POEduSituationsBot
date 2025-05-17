@@ -12,6 +12,8 @@ from service.callback import *
 
 @config.dp.message(CommandStart())
 async def command_start_handler(message: Message) -> None:
+    if gameService.game_status:
+        return
     keyboard = get_set_team_keyboard()
     file_id = await Repository.get_img_by_name("img0")
     await message.answer_photo(photo=file_id, caption=hellow_message, reply_markup=keyboard)
