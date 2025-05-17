@@ -11,8 +11,8 @@ class PairingSystem:
 
     async def add_call(self, call_id: int) -> int:
         async with self.lock:
-            for operator_id in self.free_operators:
-                if not await self.is_compatible(call_id, operator_id):
+            for operator_id in list(self.free_operators):
+                if await self.is_compatible(call_id, operator_id):
                     self.free_operators.remove(operator_id)
                     return operator_id
             self.free_calls.append(call_id)
@@ -20,8 +20,8 @@ class PairingSystem:
 
     async def  add_operator(self, operator_id: int) -> int:
         async with self.lock:
-            for call_id in self.free_calls:
-                if not await self.is_compatible(call_id, operator_id):
+            for call_id in list(self.free_calls):
+                if await self.is_compatible(call_id, operator_id):
                     self.free_calls.remove(call_id)
                     return call_id
             self.free_operators.append(operator_id)

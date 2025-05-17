@@ -158,7 +158,7 @@ class Repository:
                 .filter(CallBase.admin_id == admin_id)
                 .filter(CallBase.team_id == team_id)
             )
-            return bool(res.scalar_one_or_none())
+            return res.scalar_one_or_none() is None
 
     @staticmethod
     async def add_admin_feedback(admin_id: int, team_id: int, feedback: str):
