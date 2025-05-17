@@ -1,5 +1,5 @@
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
-
+from sqlalchemy import UniqueConstraint
 
 class Base(DeclarativeBase):
     pass
@@ -26,6 +26,10 @@ class CallBase(Base):
     team_id: Mapped[int] = mapped_column(nullable=False)
     team_feedback: Mapped[int] = mapped_column(nullable=True)
     admin_feedback: Mapped[str] = mapped_column(default="")
+
+    __table_args__ = (
+        UniqueConstraint("admin_id", "team_id", name="uq_call_admin_team"),
+    )
 
 
 class ImgBase(Base):
