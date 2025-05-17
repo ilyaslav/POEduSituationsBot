@@ -1,0 +1,12 @@
+# PyCharm project files
+*.iml
+.idea/
+.vscode/
+.env
+__pycache__/
+*.py[cod]
+*.pyo
+*.log
+.DS_Store
+dist/
+*.spec
