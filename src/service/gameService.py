@@ -47,7 +47,7 @@ class GameService:
                 try:
                     await self.call(admin_id, team_id)
                 except:
-                    await self.pairingSystem.add_call(team_id)
+                    await self.workCall(team_id)
 
     async def workOperator(self, admin_id: int):
         async with self.lock:
@@ -56,7 +56,7 @@ class GameService:
                 try:
                     await self.call(admin_id, team_id)
                 except:
-                    await self.pairingSystem.add_operator(admin_id)
+                    await self.workOperator(admin_id)
 
     async def call(self, admin_id: int, team_id: int):
         if not self.game_status:
@@ -64,6 +64,7 @@ class GameService:
         admin = await Repository.get_admin(admin_id)
         team = await Repository.get_team(team_id)
         await Repository.add_call(admin_id, team_id)
+        await Repository.update_after_call(admin_id, team_id)
         await Repository.set_in_progress(admin.user_id, True)
         await Repository.set_in_progress(team.user_id, True)
         keyboard = get_start_keyboard()

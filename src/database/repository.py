@@ -126,6 +126,11 @@ class Repository:
                 team_id=team_id
             )
             sf.add(new_call)
+            await sf.commit()
+
+    @staticmethod
+    async def update_after_call(admin_id: int, team_id: int):
+        async with session_factory() as sf:
             await sf.execute(
                 update(UserBase)
                 .values(admin_id=admin_id)

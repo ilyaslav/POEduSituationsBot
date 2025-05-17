@@ -110,5 +110,3 @@ async def callback_button(callback_query):
         await callback_query.message.answer_photo(photo=file_id)
     else:
         await callback_query.message.answer(text="Изображение не загружено")
-
-
