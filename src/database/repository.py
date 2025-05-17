@@ -189,6 +189,7 @@ class Repository:
                 select(UserBase.team_id)
                 .filter(UserBase.role_admin == False)
                 .filter(UserBase.in_progress == False)
+                .filter(UserBase.team_id != None)
             )
             return [team_id for (team_id,) in res.all()]
 
@@ -199,6 +200,7 @@ class Repository:
                 select(UserBase.admin_id)
                 .filter(UserBase.role_admin == True)
                 .filter(UserBase.in_progress == False)
+                .filter(UserBase.admin_id != None)
             )
             return [admin_id for (admin_id,) in res.all()]
 
