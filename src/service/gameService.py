@@ -63,6 +63,7 @@ class GameService:
             return
         admin = await Repository.get_admin(admin_id)
         team = await Repository.get_team(team_id)
+        print(1)
         await Repository.add_call(admin_id, team_id)
         await Repository.update_after_call(admin_id, team_id)
         await Repository.set_in_progress(admin.user_id, True)
