@@ -72,5 +72,6 @@ class GameService:
         file_id = await Repository.get_img_by_name(f"img{admin_id}")
         await config.bot.send_message(chat_id=admin.user_id, text="Кто-то идёт"+press_start, reply_markup=keyboard)
         await config.bot.send_photo(chat_id=team.user_id, caption=calls[admin_id], photo=file_id)
+        print(2)
 
 gameService = GameService()
